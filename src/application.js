@@ -41,7 +41,7 @@ module.exports = function application(
   app.use("/api", items(db, actions.updateAppointment));
   app.use("/api", transactions(db));
 
-  if (ENV === "development" || ENV === "test") {
+  if (ENV === "development" || ENV === "production") {
     Promise.all([
       read(path.resolve(__dirname, `db/schema/create.sql`)),
       read(path.resolve(__dirname, `db/schema/${ENV}.sql`))
