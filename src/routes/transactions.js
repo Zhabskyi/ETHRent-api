@@ -1,20 +1,10 @@
 const router = require("express").Router();
 
 module.exports = (db, updateAppointment) => {
-  router.get("/appointments", (request, response) => {
+  router.get("/transactions", (request, response) => {
     db.query(
       `
-      SELECT
-        appointments.id,
-        appointments.time,
-        CASE WHEN interviews.id IS NULL
-        THEN NULL
-        ELSE json_build_object('student', interviews.student, 'interviewer', interviews.interviewer_id)
-        END AS interview
-      FROM appointments
-      LEFT JOIN interviews ON interviews.appointment_id = appointments.id
-      GROUP BY appointments.id, interviews.id, interviews.student, interviews.interviewer_id
-      ORDER BY appointments.id
+      SELECT * FROM transactions
     `
     ).then(({ rows: appointments }) => {
       response.json(
