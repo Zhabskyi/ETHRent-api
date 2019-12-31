@@ -11,6 +11,7 @@ const app = express();
 const db = require("./db");
 
 const users = require("./routes/users");
+const auth = require("./routes/auth");
 const items = require("./routes/items");
 const transactions = require("./routes/transactions");
 
@@ -38,6 +39,7 @@ module.exports = function application(
   app.use(bodyparser.json());
 
   app.use("/api", users(db));
+  app.use("/auth", auth(db));
   app.use("/api", items(db, actions.updateAppointment));
   app.use("/api", transactions(db));
 

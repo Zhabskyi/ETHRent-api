@@ -26,7 +26,18 @@ const addUser = function(db, user) {
     .catch(err => console.log(err));
 };
 
+const getUserById = function (db, userId) {
+  return db.query(`
+    SELECT * FROM users
+    WHERE id = $1
+  `, [userId]
+  )
+  .then(res => res.rows[0])
+  .catch(err => console.log(err));
+}
+
 module.exports = {
   addUser,
-  getUserByEmail
+  getUserByEmail,
+  getUserById
 };

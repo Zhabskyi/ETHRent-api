@@ -26,7 +26,9 @@ module.exports = db => {
         return res.status(400).json({ msg: "User already exists" });
       }
 
-      user.password = await bcrypt.hashSync(user.password, 12);
+      const salt = await bcrypt.genSalt(12);
+
+      user.password = await bcrypt.hash(user.password, salt);
 
       newUser = await database.addUser(db, user);
 
@@ -40,7 +42,7 @@ module.exports = db => {
         payload,
         config.get("jwtSecret"),
         {
-          expiresIn: 360000
+          expiresIn: 36000
         },
         (err, token) => {
           if (err) throw err;
