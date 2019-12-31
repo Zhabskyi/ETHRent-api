@@ -12,7 +12,7 @@ const database = require("../db/database.js");
 module.exports = db => {
   router.get("/users", auth, async (req, res) => {
     try {
-      const user = await database.getUserById(db, userID);
+      const user = await database.getUserById(db, req.user.id);
       res.json(user);
     } catch {
       console.error(err.message);
