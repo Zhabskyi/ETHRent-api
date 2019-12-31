@@ -2,7 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-//const auth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 const database = require("../db/database.js");
 
 // @route     GET api/auth
@@ -10,7 +10,7 @@ const database = require("../db/database.js");
 // @access    Private
 
 module.exports = db => {
-  router.get("/users", async (req, res) => {
+  router.get("/users", auth, async (req, res) => {
     try {
       const user = await database.getUserById(db, userID);
       res.json(user);
