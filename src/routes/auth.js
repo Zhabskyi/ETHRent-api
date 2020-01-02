@@ -10,7 +10,7 @@ const database = require("../db/database.js");
 // @access    Private
 
 module.exports = db => {
-  router.get("/users", auth, async (req, res) => {
+  router.get("/auth", auth, async (req, res) => {
     try {
       const user = await database.getUserById(db, req.user.id);
       res.json(user);
@@ -23,7 +23,7 @@ module.exports = db => {
   // @route     POST api/auth
   // @desc      Auth user & get token
   // @access    Public
-  router.post("/users", async (req, res) => {
+  router.post("/auth", async (req, res) => {
     try {
       let user = await database.getUserByEmail(db, req.body.email);
 

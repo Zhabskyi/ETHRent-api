@@ -30,17 +30,14 @@ function read(file) {
   });
 }
 
-module.exports = function application(
-  ENV,
-  actions = { updateAppointment: () => {} }
-) {
+module.exports = function application(ENV) {
   app.use(cors());
   app.use(helmet());
   app.use(bodyparser.json());
 
+  app.use("/api", auth(db));
   app.use("/api", users(db));
-  app.use("/auth", auth(db));
-  app.use("/api", items(db, actions.updateAppointment));
+  app.use("/api", items(db));
   app.use("/api", transactions(db));
 
   if (ENV === "development" || ENV === "production") {
